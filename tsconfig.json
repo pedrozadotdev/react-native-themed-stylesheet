@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "target": "esnext",
+    "module": "commonjs",
+    "jsx": "react-native",
+    "strict": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "declaration": true,
+    "outDir": "."
+  },
+  "files": ["index.ts"]
+}

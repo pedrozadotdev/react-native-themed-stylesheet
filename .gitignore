@@ -1,0 +1,10 @@
+node_modules
+npm-debug.*
+index.js
+index.d.ts
+.vscode
+web-build/
+web-report/
+coverage
+.DS_Store
+yarn-error.log

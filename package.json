@@ -1,0 +1,70 @@
+{
+  "name": "react-native-themed-stylesheet",
+  "version": "0.0.1",
+  "description": "React Native StyleSheets with Theming Support",
+  "author": "Andre Pedroza",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andreppedroza/react-native-themed-stylesheet.git"
+  },
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "test": "jest",
+    "test:types": "tsc --project . --noEmit",
+    "test:coverage": "npm test -- --coverage=true"
+  },
+  "keywords": ["react native", "theme", "theming", "stylesheet"],
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-appearance": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@testing-library/jest-native": "^3.4.3",
+    "@testing-library/react-native": "^7.1.0",
+    "@types/jest": "^26.0.20",
+    "@types/react": "^17.0.1",
+    "@types/react-native": "^0.63.48",
+    "@types/react-test-renderer": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.15.0",
+    "@typescript-eslint/parser": "^4.15.0",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.19.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.22.0",
+    "jest": "^26.6.3",
+    "react": "16.13.1",
+    "react-native": "0.63.4",
+    "react-native-appearance": "~0.3.3",
+    "react-test-renderer": "16.13.1",
+    "ts-jest": "^26.5.1",
+    "ts-node": "^9.1.1",
+    "typescript": "~4.0.0"
+  },
+  "jest": {
+    "preset": "react-native",
+    "globals": {
+      "ts-jest": {
+        "tsconfig": {
+          "jsx": "react"
+        }
+      }
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testMatch": ["<rootDir>/tests/tests.tsx"],
+    "collectCoverageFrom": ["<rootDir>/index.ts"],
+    "moduleFileExtensions": ["js", "ts", "tsx"],
+    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
+  }
+}
