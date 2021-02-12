@@ -45,13 +45,12 @@ const themes = {
   dark: {
     textColor: '#fff'
   },
-  common: {
-    //Optional
+  common: { // Optional
     fontSize: 12
   }
 }
 
-const { ThemeProvider, useStyle, useTheme } = createTheme(themes, 'auto') //Initial Mode is optional(Default: 'auto')
+const { ThemeProvider, useStyle, useTheme } = createTheme(themes, 'auto') // Initial Mode is optional(Default: 'auto')
 
 export { ThemeProvider, useStyle, useTheme }
 ```
