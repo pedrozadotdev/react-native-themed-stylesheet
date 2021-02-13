@@ -15,7 +15,7 @@
     "build": "tsc",
     "test": "jest",
     "test:types": "tsc --project . --noEmit",
-    "test:coverage": "npm test -- --coverage=true"
+    "test:coverage": "npm test -- --coverage=true --collectCoverage"
   },
   "keywords": ["react native", "theme", "theming", "stylesheet"],
   "peerDependencies": {
