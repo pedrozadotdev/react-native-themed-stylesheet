@@ -12,10 +12,8 @@
   "types": "index.d.ts",
   "files": ["index.js", "index.d.ts"],
   "scripts": {
-    "prepublish": "npm run build",
     "build": "tsc",
     "test": "jest",
-    "test:types": "tsc --project . --noEmit",
     "test:coverage": "npm test -- --coverage=true --collectCoverage"
   },
   "keywords": ["react native", "theme", "theming", "stylesheet"],

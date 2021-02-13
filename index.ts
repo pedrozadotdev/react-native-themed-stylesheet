@@ -31,7 +31,7 @@ type UseStyle<T, C> = <S extends ThemeObject>(
 ) => StyleSheet.NamedStyles<S>
 type CreateTheme = <T, C>(
   themes: Themes<T, C | undefined>,
-  mode?: ThemeMode
+  initialMode?: ThemeMode
 ) => {
   ThemeProvider: React.FC
   useTheme: UseTheme<T, C | undefined>

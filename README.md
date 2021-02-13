@@ -1,11 +1,11 @@
-![](https://github.com/andreppedroza/react-native-themed-stylesheet/workflows/Release%20CI/badge.svg)
 [![codecov](https://codecov.io/gh/andreppedroza/react-native-themed-stylesheet/branch/main/graph/badge.svg)](https://codecov.io/gh/andreppedroza/react-native-themed-stylesheet)
+![](https://github.com/andreppedroza/react-native-themed-stylesheet/workflows/Release%20CI/badge.svg)
 
 # react-native-themed-stylesheet
 
 A package that allows you to create React Native StyleSheets with support for Dark/Light/Auto Themes.
 
-- Depends on react-native-appearance to choose the theme based on OS preference (Android 10/iOS 13)
+- Depends on react-native-appearance to choose the theme based on OS preference(Android 10/iOS 13)
 - Simple API
 - Fully typed
 - Builds on top of StyleSheets and Hooks
@@ -32,10 +32,10 @@ npm install --save react-native-appearance react-native-themed-stylesheet
 
 ## Usage
 
-Defining Themes:
+Creating the theme:
 
 ```ts
-// themes.ts
+// theme.ts
 
 import { createTheme } from 'react-native-themed-stylesheet'
 
@@ -56,16 +56,15 @@ const { ThemeProvider, useStyle, useTheme } = createTheme(themes, 'auto') // Ini
 export { ThemeProvider, useStyle, useTheme }
 ```
 
-Using themes:
+Using the theme:
 
 ```tsx
 // Components.tsx
 import React from 'react'
 import { View, Text, Button } from 'react-native'
-import { ThemeProvider, useStyle, useTheme } from './themes'
-import { styleSheetFactory } from './themes'
+import { ThemeProvider, useStyle, useTheme } from './theme'
 
-const ComponentWithUseStyle = () => {
+const ComponentWithUseStyle: React.FC = () => {
   const styles = useStyle(theme => {
     text: {
       color: theme.textColor,
@@ -80,7 +79,7 @@ const ComponentWithUseStyle = () => {
   )
 }
 
-const ComponentWithUseTheme = () => {
+const ComponentWithUseTheme: React.FC = () => {
   const { theme, mode, setThemes, setMode } = useTheme()
   console.log('Current Mode:', mode)
 
@@ -134,9 +133,9 @@ ThemeObject
 
 An object containing the following properties:
 
-- ThemeProvider: Theme Provider
-- useStyle: Hook to create Named StyleSheets
-- useTheme: Hook to get access to ThemeContext
+- `ThemeProvider`: Theme Provider.
+- `useStyle`: Hook to create Named StyleSheets.
+- `useTheme`: Hook to get access to ThemeContext.
 
 ---
 
@@ -148,11 +147,11 @@ A react component to provide ThemeContext.
 
 ### Function: `useStyle(createStyle)`
 
-Use this function to create themed stylesheets.
+Hook to create themed stylesheets.
 
 **Parameters**
 
-- `createStyle`: A function that receive the current theme and return an object of type `T`.
+- `createStyle`: A function that receives the current theme and returns an object of type `T`.
 
 **Returns**
 
@@ -166,7 +165,7 @@ StyleSheet.NamedStyles<T>
 
 ### Function: `useTheme()`
 
-Use this function to get theme context.
+Hook to get access to theme context.
 
 **Returns**
 
@@ -178,7 +177,7 @@ Use this function to get theme context.
 
 An object containing the following properties:
 
-- `theme`: The current theme
+- `theme`: The current theme.
 - `mode`: The current mode.
-- `setThemes`: Function to set the themes(The same type of createTheme themes param).
+- `setThemes`: Function to set the themes(The same type of `createTheme` `themes` param).
 - `setMode`: Function to set the mode('light', 'dark' or 'auto').
