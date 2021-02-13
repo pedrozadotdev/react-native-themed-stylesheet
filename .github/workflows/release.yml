@@ -1,7 +1,6 @@
 name: Release CI
 on:
   release:
-  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
