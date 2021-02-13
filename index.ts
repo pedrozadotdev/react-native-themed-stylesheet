@@ -9,7 +9,6 @@ import {
 } from 'react'
 import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native'
 import { Appearance, AppearanceProvider } from 'react-native-appearance'
-
 type Themes<T, C> = {
   light: T
   dark: T
@@ -50,7 +49,7 @@ const createTheme: CreateTheme = (ts, initialMode = 'auto') => {
         : systemColorScheme !== 'no-preference'
         ? systemColorScheme
         : 'light'
-    return { ...themes[currentMode], ...common } as Theme & Common
+    return { ...common, ...themes[currentMode] } as Theme & Common
   }
   const ThemeContext = createContext<ThemeContext<Theme, Common>>({
     theme: generateTheme(initialMode, ts),

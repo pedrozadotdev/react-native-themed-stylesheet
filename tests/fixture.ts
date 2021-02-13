@@ -6,7 +6,8 @@ export const themes1 = {
     textColor: '#fff'
   },
   common: {
-    fontSize: 12
+    fontSize: 12,
+    textColor: '#000'
   }
 }
 
@@ -20,7 +21,7 @@ export const themes2 = {
 }
 
 export const style1 = (
-  theme: typeof themes1.light & typeof themes1.common
+  theme: typeof themes1.common & typeof themes1.light
 ) => ({
   text: {
     color: theme.textColor,

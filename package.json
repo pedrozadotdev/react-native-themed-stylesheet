@@ -1,6 +1,6 @@
 {
   "name": "react-native-themed-stylesheet",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "React Native StyleSheets with Theming Support",
   "author": "Andre Pedroza",
   "license": "MIT",
@@ -24,8 +24,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
-    "@testing-library/jest-native": "^3.4.3",
-    "@testing-library/react-native": "^7.1.0",
+    "@testing-library/react-hooks": "^5.0.3",
     "@types/jest": "^26.0.20",
     "@types/react": "^17.0.1",
     "@types/react-native": "^0.63.48",
@@ -61,9 +60,8 @@
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testMatch": ["<rootDir>/tests/tests.tsx"],
+    "testMatch": ["<rootDir>/tests/tests.ts"],
     "collectCoverageFrom": ["<rootDir>/index.ts"],
-    "moduleFileExtensions": ["js", "ts", "tsx"],
-    "setupFilesAfterEnv": ["@testing-library/jest-native/extend-expect"]
+    "moduleFileExtensions": ["js", "ts", "tsx"]
   }
 }
