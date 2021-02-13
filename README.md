@@ -36,7 +36,6 @@ Creating the theme:
 
 ```ts
 // theme.ts
-
 import { createTheme } from 'react-native-themed-stylesheet'
 
 const themes = {
