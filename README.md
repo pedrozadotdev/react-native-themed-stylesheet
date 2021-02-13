@@ -1,4 +1,5 @@
-![](https://github.com/andreppedroza/react-native-themed-stylesheet/workflows/Node%20CI/badge.svg)
+![](https://github.com/andreppedroza/react-native-themed-stylesheet/workflows/Release%20CI/badge.svg)
+[![codecov](https://codecov.io/gh/andreppedroza/react-native-themed-stylesheet/branch/main/graph/badge.svg)](https://codecov.io/gh/andreppedroza/react-native-themed-stylesheet)
 
 # react-native-themed-stylesheet
 
