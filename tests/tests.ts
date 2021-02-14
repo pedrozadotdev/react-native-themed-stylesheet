@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react-hooks/native'
 import { Appearance } from '../__mocks__/react-native-appearance'
 import { createTheme } from '..'
-import { style1, style2, themes1, themes2 } from './fixture'
+import { style1, style2, style3, themes1, themes2 } from './fixture'
 import { TextStyle } from 'react-native'
 
 beforeEach(() => {
@@ -15,6 +15,13 @@ describe('With Common Prop and Auto Mode', () => {
       wrapper: ThemeProvider
     })
     expect((result.current.text as TextStyle).color).toEqual('#ff0000')
+    expect((result.current.text as TextStyle).fontSize).toEqual(12)
+  })
+  test('Create style with useStyle() and options', () => {
+    const { result } = renderHook(() => useStyle(style3, { disabled: true }), {
+      wrapper: ThemeProvider
+    })
+    expect((result.current.text as TextStyle).color).toEqual('#c0c0c0')
     expect((result.current.text as TextStyle).fontSize).toEqual(12)
   })
   test('Create style with useTheme()', () => {

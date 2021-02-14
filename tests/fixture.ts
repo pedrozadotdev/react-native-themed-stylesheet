@@ -34,3 +34,13 @@ export const style2 = (theme: typeof themes2.light) => ({
     color: theme.textColor
   }
 })
+
+export const style3 = (
+  theme: typeof themes1.common & typeof themes1.light,
+  options?: { disabled: boolean }
+) => ({
+  text: {
+    color: options && options.disabled ? '#c0c0c0' : theme.textColor,
+    fontSize: theme.fontSize
+  }
+})

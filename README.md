@@ -9,6 +9,7 @@ A package that allows you to create React Native StyleSheets with support for Da
 - Simple API
 - Fully typed
 - Builds on top of StyleSheets and Hooks
+- Storybook addon to change Theme Mode
 
 ## Installation
 
@@ -64,12 +65,12 @@ import { View, Text, Button } from 'react-native'
 import { ThemeProvider, useStyle, useTheme } from './theme'
 
 const ComponentWithUseStyle: React.FC = () => {
-  const styles = useStyle(theme => {
+  const styles = useStyle((theme, options) => {
     text: {
-      color: theme.textColor,
+      color: options.disabled ? '#C9C9C9' : theme.textColor,
       fontSize: theme.fontSize
     }
-  })
+  }, { disabled: true }) // Options is optional
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -106,10 +107,39 @@ const ComponentWithUseTheme: React.FC = () => {
   )
 }
 ```
+## Storybook Addon
+
+### Installation:
+
+```js
+// storybook.js
+import {
+  getStorybookUI,
+  configure,
+  addDecorator,
+  addParameters
+} from '@storybook/react-native'
+import { withThemeHook } from 'react-native-themed-stylesheet/storybook'
+import 'react-native-themed-stylesheet/storybook/register'
+import { useTheme } from './theme'
+
+addDecorator(withThemeHook)
+addParameters({
+  useTheme
+})
+
+configure(() => {
+  require('path/to/some/story')
+}, module)
+
+const StorybookUIRoot = getStorybookUI()
+
+export default StorybookUIRoot // Make sure to use this component within ThemeProvider.
+```
 
 ## API
 
-### Function: `createTheme(themes, initialMode)`
+### Function: `createTheme(themes, [initialMode])`
 
 Use this function to create the theme.
 
@@ -144,13 +174,14 @@ A react component to provide ThemeContext.
 
 ---
 
-### Function: `useStyle(createStyle)`
+### Function: `useStyle(createStyles, [options])`
 
 Hook to create themed stylesheets.
 
 **Parameters**
 
-- `createStyle`: A function that receives the current theme and returns an object of type `T`.
+- `createStyles`: A function that receives the current theme and options and returns an object of type `T`.
+- `options`: Custom options to be use inside createStyles.
 
 **Returns**
 
