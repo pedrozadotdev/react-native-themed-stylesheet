@@ -174,14 +174,13 @@ A react component to provide ThemeContext.
 
 ---
 
-### Function: `useStyle(createStyles, [options])`
+### Function: `useStyle(createStyles)`
 
 Hook to create themed stylesheets.
 
 **Parameters**
 
 - `createStyles`: A function that receives the current theme and options and returns an object of type `T`.
-- `options`: Custom options to be used inside createStyles.
 
 **Returns**
 

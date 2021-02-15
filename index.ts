@@ -25,9 +25,8 @@ type UseTheme<T, C> = () => ThemeContext<T, C>
 type ThemeObject = {
   [props: string]: ViewStyle | TextStyle | ImageStyle
 }
-type UseStyle<T, C> = <S extends ThemeObject, O>(
-  createStyleSheet: (theme: T & C, options?: O) => S,
-  options?: O
+type UseStyle<T, C> = <S extends ThemeObject>(
+  createStyleSheet: (theme: T & C) => S
 ) => StyleSheet.NamedStyles<S>
 type CreateTheme = <T, C>(
   themes: Themes<T, C | undefined>,
@@ -108,9 +107,9 @@ const createTheme: CreateTheme = (ts, initialMode = 'auto') => {
     )
 
   const useTheme: UseTheme<Theme, Common> = () => useContext(ThemeContext)
-  const useStyle: UseStyle<Theme, Common> = (createStyledObject, options) => {
+  const useStyle: UseStyle<Theme, Common> = createStyledObject => {
     const { theme } = useTheme()
-    return StyleSheet.create(createStyledObject(theme, options))
+    return StyleSheet.create(createStyledObject(theme))
   }
 
   return { ThemeProvider, useStyle, useTheme }
