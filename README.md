@@ -180,7 +180,7 @@ Hook to create themed stylesheets.
 
 **Parameters**
 
-- `createStyles`: A function that receives the current theme and options and returns an object of type `T`.
+- `createStyles`: A function that receives the current theme and returns an object of type `T`.
 
 **Returns**
 
