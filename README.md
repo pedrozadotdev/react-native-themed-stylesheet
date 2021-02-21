@@ -71,7 +71,7 @@ import { View, Text, Button } from 'react-native'
 import { ThemeProvider, useStyle, useTheme } from './theme'
 
 const ComponentWithUseStyle: React.FC = () => {
-  const styles = useStyle((theme, options) => {
+  const styles = useStyle(theme => {
     text: {
       color: theme.textColor,
       fontSize: theme.fontSize
