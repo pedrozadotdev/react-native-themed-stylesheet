@@ -1,5 +1,11 @@
 [![codecov](https://codecov.io/gh/andreppedroza/react-native-themed-stylesheet/branch/main/graph/badge.svg)](https://codecov.io/gh/andreppedroza/react-native-themed-stylesheet)
 ![](https://github.com/andreppedroza/react-native-themed-stylesheet/workflows/Release%20CI/badge.svg)
+[![Version][npm-version]][npm-link] [![NPM Downloads][npm-downloads]][npm-link] [![License][npm-license]](https://github.com/andreppedroza/react-native-themed-stylesheet/blob/master/LICENSE)
+
+[npm-version]: https://img.shields.io/npm/v/react-native-themed-stylesheet.svg
+[npm-downloads]: https://img.shields.io/npm/dt/react-native-themed-stylesheet.svg
+[npm-license]: https://img.shields.io/npm/l/react-native-themed-stylesheet.svg
+[npm-link]: https://www.npmjs.com/package/react-native-themed-stylesheet
 
 # react-native-themed-stylesheet
 
