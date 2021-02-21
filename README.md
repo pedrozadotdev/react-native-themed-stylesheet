@@ -73,10 +73,10 @@ import { ThemeProvider, useStyle, useTheme } from './theme'
 const ComponentWithUseStyle: React.FC = () => {
   const styles = useStyle((theme, options) => {
     text: {
-      color: options.disabled ? '#C9C9C9' : theme.textColor,
+      color: theme.textColor,
       fontSize: theme.fontSize
     }
-  }, { disabled: true }) // Options is optional
+  }
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
