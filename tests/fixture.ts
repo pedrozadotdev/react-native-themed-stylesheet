@@ -1,36 +1,57 @@
 export const themes1 = {
   light: {
-    textColor: '#ff0000'
+    colors: {
+      primary: '#a1a1a1'
+    }
   },
   dark: {
-    textColor: '#fff'
+    colors: {
+      primary: '#a2a2a2'
+    }
   },
-  common: {
-    fontSize: 12,
-    textColor: '#000'
+  constants: {
+    colors: {
+      accent: '#a0a0a0'
+    }
   }
 }
 
 export const themes2 = {
   light: {
-    textColor: '#ffff00'
+    colors: {
+      primary: '#b1b1b1'
+    }
   },
   dark: {
-    textColor: '#fff'
+    colors: {
+      primary: '#b2b2b2'
+    }
+  },
+  constants: {
+    colors: {
+      accent: '#b0b0b0'
+    }
   }
 }
 
-export const style1 = (
-  theme: typeof themes1.common & typeof themes1.light
-) => ({
-  text: {
-    color: theme.textColor,
-    fontSize: theme.fontSize
+export const themes3 = {
+  light: {
+    colors: {
+      primary: '#c1c1c1'
+    }
+  },
+  dark: {
+    colors: {
+      primary: '#c2c2c2'
+    }
   }
-})
+}
 
-export const style2 = (theme: typeof themes2.light) => ({
+export const createStyles = ({
+  colors
+}: typeof themes1.constants & typeof themes1.light) => ({
   text: {
-    color: theme.textColor
+    backgroundColor: colors.accent,
+    color: colors.primary
   }
 })

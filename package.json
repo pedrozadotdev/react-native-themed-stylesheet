@@ -1,6 +1,6 @@
 {
   "name": "react-native-themed-stylesheet",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "description": "React Native StyleSheets with Theming Support",
   "author": "Andre Pedroza",
   "license": "MIT",
@@ -13,7 +13,7 @@
   "files": ["index.js", "index.d.ts", "storybook"],
   "scripts": {
     "build": "tsc",
-    "test": "jest",
+    "test": "jest --verbose",
     "test:coverage": "npm test -- --coverage=true --collectCoverage"
   },
   "keywords": [
@@ -27,10 +27,10 @@
     "react-native-appearance"
   ],
   "peerDependencies": {
+    "@storybook/addons": "*",
     "react": "*",
     "react-native": "*",
-    "react-native-appearance": "*",
-    "@storybook/addons": "*"
+    "react-native-appearance": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -55,7 +55,6 @@
     "react-native-appearance": "~0.3.3",
     "react-test-renderer": "16.13.1",
     "ts-jest": "^26.5.1",
-    "ts-node": "^9.1.1",
     "typescript": "~4.0.0"
   },
   "jest": {
@@ -71,8 +70,11 @@
       "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testMatch": ["<rootDir>/tests/tests.ts"],
-    "collectCoverageFrom": ["<rootDir>/index.ts"],
+    "testMatch": ["<rootDir>/tests/with*.ts"],
+    "collectCoverageFrom": ["<rootDir>/src/index.ts"],
     "moduleFileExtensions": ["js", "ts", "tsx"]
+  },
+  "dependencies": {
+    "ts-deepmerge": "^1.0.6"
   }
 }

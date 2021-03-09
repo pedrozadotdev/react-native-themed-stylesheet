@@ -39,72 +39,58 @@ npm install --save react-native-appearance react-native-themed-stylesheet
 
 ## Usage
 
-Creating the theme:
+Create a type declaration file to merge BaseTheme declaration:
 
 ```ts
-// theme.ts
-import { createTheme } from 'react-native-themed-stylesheet'
+// react-native-themed-stylesheet.d.ts
+import 'react-native-themed-stylesheet'
 
-const themes = {
-  light: {
-    textColor: '#ff0000'
-  },
-  dark: {
-    textColor: '#fff'
-  },
-  common: { // Optional
-    fontSize: 12
+declare module 'react-native-themed-stylesheet' {
+  export interface BaseTheme {
+    theme: {
+      colors: {
+        primary: string
+      }
+    },
+    constants: {  // This is optional. If declared/defined, it will be merge with the current theme.
+      colors: {
+        accent: string
+      }
+    }
   }
 }
-
-const { ThemeProvider, useStyle, useTheme } = createTheme(themes, 'auto') // Initial Mode is optional(Default: 'auto')
-
-export { ThemeProvider, useStyle, useTheme }
 ```
 
 Using the theme:
 
 ```tsx
-// Components.tsx
+// App.tsx
 import React from 'react'
 import { View, Text, Button } from 'react-native'
-import { ThemeProvider, useStyle, useTheme } from './theme'
+import { ThemeProvider, useCreateStyles, useMode, useTheme, useThemes } from 'react-native-themed-stylesheet'
 
-const ComponentWithUseStyle: React.FC = () => {
-  const styles = useStyle(theme => {
-    text: {
-      color: theme.textColor,
-      fontSize: theme.fontSize
-    }
-  }
-
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={styles.text}>Hello World</Text>
-    </View>
-  )
-}
-
-const ComponentWithUseTheme: React.FC = () => {
-  const { theme, mode, setThemes, setMode } = useTheme()
+const DefaultComponent: React.FC = () => {
+  const { colors } = useTheme()
+  const [mode, setMode] = useMode()
+  const [themes, setThemes] = useThemes()
   console.log('Current Mode:', mode)
-
+  console.log('Themes:', themes)
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ color: theme.textColor, fontSize: theme.fontSize }}>Hello World</Text>
+      <Text style={{ color: colors.primary, backgroundColor: colors.accent }}>Hello World</Text>
       <Button title='Dark Mode' onPress={() => setMode('dark')}/>
       <Button title='Light Mode' onPress={() => setMode('light')}/>
       <Button title='Auto Mode' onPress={() => setMode('auto')}/>
       <Button title='Change Themes' onPress={
           () => setThemes({
             light: {
-              textColor: '#ffff00'
+              colors: { primary: '#c1c1c1' }
             },
             dark: {
-              textColor: '#C9C9C9'
+              colors: { primary: '#c2c2c2' }
             },
-            common: {
-              fontSize: 14
+            constants: {
+              colors: { accent: '#c3c3c3' }
             }
           })
         }
@@ -112,6 +98,45 @@ const ComponentWithUseTheme: React.FC = () => {
     </View>
   )
 }
+
+const ComponentWithUseCreateStyles: React.FC = () => {
+  const styles = useCreateStyles(({ colors }) => {
+    text: {
+      color: colors.primary,
+      backgroundColor: colors.accent
+    }
+  }
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text style={styles.text}>Hello World</Text>
+    </View>
+  )
+}
+
+const themes = {
+  dark: {
+    colors: {
+      primary: '#000'
+    }
+  },
+  light: {
+    colors: {
+      primary: '#fff'
+    }
+  },
+  constants: {
+    colors: {
+      accent: '#c0c0c0'
+    }
+  }
+}
+
+const App: React.FC = () => (
+  <ThemeProvider themes={themes}>
+    <DefaultComponent />
+    <ComponentWithUseCreateStyles />
+  </ThemeProvider>
+)
 ```
 ## Storybook Addon
 
@@ -121,18 +146,9 @@ const ComponentWithUseTheme: React.FC = () => {
 // storybook.js
 import {
   getStorybookUI,
-  configure,
-  addDecorator,
-  addParameters
+  configure
 } from '@storybook/react-native'
-import { withThemeHook } from 'react-native-themed-stylesheet/storybook'
 import 'react-native-themed-stylesheet/storybook/register'
-import { useTheme } from './theme'
-
-addDecorator(withThemeHook)
-addParameters({
-  useTheme
-})
 
 configure(() => {
   require('path/to/some/story')
@@ -145,74 +161,83 @@ export default StorybookUIRoot // Make sure to use this component within ThemePr
 
 ## API
 
-### Function: `createTheme(themes, [initialMode])`
-
-Use this function to create the theme.
-
-**Parameters**
-
-- `themes`: An object containing light, dark and an optional common theme(Will be merge with boths themes).
-- `initialMode`: A string('light', 'dark' or 'auto') specifying the initial mode(Default: 'auto').
-
-**Returns**
-
-```
-
-ThemeObject
-
-```
-
----
-
-### Object: `ThemeObject`
-
-An object containing the following properties:
-
-- `ThemeProvider`: Theme Provider.
-- `useStyle`: Hook to create Named StyleSheets.
-- `useTheme`: Hook to get access to ThemeContext.
-
----
-
 ### React Component: `ThemeProvider`
 
-A react component to provide ThemeContext.
+Component to provide ThemeContext.
+
+**Props**
+
+- `themes`: An object of type `Themes`:
+
+```ts
+type Themes = {
+  dark: BaseTheme['theme']
+  light: BaseTheme['theme']
+  constants?: BaseTheme['constants']
+}
+```
+
+- `mode`: An optional string of type `ThemeMode`: (Default: 'auto')
+
+```ts
+type ThemeMode = 'auto' | 'dark' | 'light'
+```
 
 ---
 
-### Function: `useStyle(createStyles)`
+### Function: `useCreateStyle(createStyles)`
 
 Hook to create themed stylesheets.
 
 **Parameters**
 
-- `createStyles`: A function that receives the current theme and returns an object of type `T`.
+- `createStyles`: A function that receives the current theme and returns an object of type `Styles`.
+
+```ts
+type Styles  = {
+  [prop: string]: ViewStyle | TextStyle | ImageStyle
+}
+type Theme = (BaseTheme['constants'] & BaseTheme['theme']) | BaseTheme['theme']
+```
 
 **Returns**
 
 ```
+[styles: StyleSheet.NamedStyles<Styles>, theme: Theme]
+```
 
-StyleSheet.NamedStyles<T>
+---
 
+### Function: `useMode()`
+
+Hook to get access to current mode.
+
+**Returns**
+
+```ts
+[mode, setMode]: [ThemeMode, (newMode: ThemeMode) => void]
 ```
 
 ---
 
 ### Function: `useTheme()`
 
-Hook to get access to theme context.
+Hook to get access to current theme.
 
 **Returns**
 
+```ts
+theme: Theme
 ```
 
-{ theme, mode, setThemes, setMode }
+---
 
+### Function: `useThemes()`
+
+Hook to get access to themes.
+
+**Returns**
+
+```ts
+[themes, setThemes]: [Themes, (newThemes: Themes) => void]
 ```
-
-An object containing the following properties:
-
-- `theme`: The current theme.
-- `mode`: The current mode.
-- `setThemes`: Function to set the themes(The same type of `createTheme` `themes` param).
-- `setMode`: Function to set the mode('light', 'dark' or 'auto').

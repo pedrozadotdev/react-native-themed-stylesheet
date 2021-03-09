@@ -1,8 +1,9 @@
 /* eslint-disable indent */
 /* eslint-disable multiline-ternary */
-import { useEffect, useState, createElement } from 'react'
+import { createElement } from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 import addons from '@storybook/addons'
+import { useMode } from '..'
 
 const ADDON_ID = 'storybook-addon-ondevice-themed-stylesheet'
 const PANEL_ID = `${ADDON_ID}/panel`
@@ -29,39 +30,28 @@ const Button = ({ mode, active, setMode }) =>
     )
   )
 
-const ThemePanel = ({ channel }) => {
-  const [currentMode, setCurrentMode] = useState(null)
-  useEffect(() => {
-    const onModeChange = newMode => setCurrentMode(newMode)
-    channel.on('mode', onModeChange)
-    return channel.removeListener(onModeChange)
-  }, [])
-  useEffect(() => {
-    currentMode && channel.emit('setMode', currentMode)
-  }, [currentMode])
-  return currentMode
-    ? createElement(
+const ThemePanel = () => {
+  const [mode, setMode] = useMode()
+  return createElement(
+    View,
+    null,
+    ['auto', 'light', 'dark'].map(m =>
+      createElement(
         View,
-        null,
-        ['auto', 'light', 'dark'].map(m =>
-          createElement(
-            View,
-            { key: m },
-            createElement(Button, {
-              mode: m,
-              active: currentMode === m,
-              setMode: setCurrentMode
-            })
-          )
-        )
+        { key: m },
+        createElement(Button, {
+          mode: m,
+          active: mode === m,
+          setMode
+        })
       )
-    : null
+    )
+  )
 }
 
 addons.register(ADDON_ID, () => {
-  const channel = addons.getChannel()
   addons.addPanel(PANEL_ID, {
     title: 'Theme',
-    render: () => createElement(ThemePanel, { channel }, null)
+    render: () => createElement(ThemePanel, null, null)
   })
 })
