@@ -206,7 +206,7 @@ type Theme = (BaseTheme['constants'] & BaseTheme['theme']) | BaseTheme['theme']
 **Returns**
 
 ```
-[styles: StyleSheet.NamedStyles<Styles>, theme: Theme]
+[styles, theme]: [StyleSheet.NamedStyles<Styles>, Theme]
 ```
 
 ---
