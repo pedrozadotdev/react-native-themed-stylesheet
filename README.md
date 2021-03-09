@@ -100,7 +100,7 @@ const DefaultComponent: React.FC = () => {
 }
 
 const ComponentWithUseCreateStyles: React.FC = () => {
-  const styles = useCreateStyles(({ colors }) => {
+  const [styles, theme] = useCreateStyles(({ colors }) => {
     text: {
       color: colors.primary,
       backgroundColor: colors.accent
@@ -109,6 +109,7 @@ const ComponentWithUseCreateStyles: React.FC = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text style={styles.text}>Hello World</Text>
+      <Text style={{ color: theme.colors.accent }}>Hello World 2</Text>
     </View>
   )
 }
@@ -137,6 +138,8 @@ const App: React.FC = () => (
     <ComponentWithUseCreateStyles />
   </ThemeProvider>
 )
+
+export default App
 ```
 ## Storybook Addon
 
