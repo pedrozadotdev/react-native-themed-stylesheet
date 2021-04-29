@@ -1,3 +1,16 @@
+type AppearanceType = {
+  listener: null | ((v: 'dark' | 'light' | null) => void)
+  set: (v: 'dark' | 'light' | null) => void
+}
+
+export const Appearance: AppearanceType = {
+  listener: null,
+  set (v) {
+    typeof this.listener === 'function' && this.listener(v)
+    this.listener = null
+  }
+}
+
 export const themes1 = {
   light: {
     colors: {

@@ -1,6 +1,6 @@
 {
   "name": "react-native-themed-stylesheet",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "React Native StyleSheets with Theming Support",
   "author": "Andre Pedroza",
   "license": "MIT",
@@ -29,8 +29,7 @@
   "peerDependencies": {
     "@storybook/addons": "*",
     "react": "*",
-    "react-native": "*",
-    "react-native-appearance": "*"
+    "react-native": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -52,7 +51,6 @@
     "jest": "^26.6.3",
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "react-native-appearance": "~0.3.3",
     "react-test-renderer": "16.13.1",
     "ts-jest": "^26.5.1",
     "typescript": "~4.0.0"

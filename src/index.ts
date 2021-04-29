@@ -7,8 +7,13 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import { ImageStyle, StyleSheet, TextStyle, ViewStyle } from 'react-native'
-import { Appearance, AppearanceProvider } from 'react-native-appearance'
+import {
+  ImageStyle,
+  StyleSheet,
+  TextStyle,
+  useColorScheme,
+  ViewStyle
+} from 'react-native'
 import merge from 'ts-deepmerge'
 
 export interface BaseTheme {}
@@ -67,7 +72,7 @@ type ThemeProviderProps = {
 
 const themeContext = createContext<ThemeContext>({} as ThemeContext)
 
-const generateTheme = (mode: ThemeMode, themes: Themes) => {
+const generateTheme = (mode: Exclude<ThemeMode, 'auto'>, themes: Themes) => {
   if (
     typeof themes !== 'object' ||
     !themes ||
@@ -78,42 +83,27 @@ const generateTheme = (mode: ThemeMode, themes: Themes) => {
   ) {
     return {}
   }
-  const constants = 'constants' in themes ? themes['constants'] : {}
-  const systemColorScheme = Appearance.getColorScheme()
-  const currentMode =
-    mode !== 'auto'
-      ? mode
-      : systemColorScheme !== 'no-preference'
-      ? systemColorScheme
-      : 'light'
-  return merge(constants, themes[currentMode])
+  const constants = ('constants' in themes ? themes['constants'] : {}) || {}
+  return merge(constants, themes[mode])
 }
 
-const RawThemeProvider: React.FC<ThemeProviderProps> = ({
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   mode: initialMode,
   themes: initialThemes
 }) => {
+  const colorScheme = useColorScheme()
   const [mode, setMode] = useState(initialMode ?? 'auto')
   const [themes, setThemes] = useState(initialThemes)
-  const [theme, setTheme] = useState(generateTheme(mode, themes))
+  const [theme, setTheme] = useState(
+    generateTheme(mode !== 'auto' ? mode : colorScheme || 'light', themes)
+  )
   useEffect(() => {
-    let subscription: any
-    setTheme(generateTheme(mode, themes))
-    if (mode === 'auto') {
-      subscription = Appearance.addChangeListener(({ colorScheme }) => {
-        setTheme(
-          generateTheme(
-            colorScheme !== 'no-preference' ? colorScheme : 'light',
-            themes
-          )
-        )
-      })
-    }
-    return () => {
-      subscription && subscription.remove()
-    }
+    mode !== 'auto' && setTheme(generateTheme(mode, themes))
   }, [mode, themes])
+  useEffect(() => {
+    mode === 'auto' && setTheme(generateTheme(colorScheme || 'light', themes))
+  }, [colorScheme, mode, themes])
   return createElement(
     themeContext.Provider,
     {
@@ -128,16 +118,6 @@ const RawThemeProvider: React.FC<ThemeProviderProps> = ({
     children
   )
 }
-
-export const ThemeProvider: typeof RawThemeProvider = ({
-  children,
-  ...props
-}) =>
-  createElement(
-    AppearanceProvider,
-    null,
-    createElement(RawThemeProvider, props, children)
-  )
 
 export const useMode: UseMode = () => {
   const { mode, setMode } = useContext(themeContext)

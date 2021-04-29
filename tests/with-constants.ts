@@ -1,7 +1,6 @@
 import { createElement } from 'react'
 import { TextStyle } from 'react-native'
 import { renderHook, act } from '@testing-library/react-hooks/native'
-import { Appearance } from '../__mocks__/react-native-appearance'
 import {
   ThemeProvider,
   useCreateStyles,
@@ -9,16 +8,11 @@ import {
   useTheme,
   useThemes
 } from '../src/index'
-import { createStyles, themes1, themes2 } from './fixture'
-
+import { Appearance, createStyles, themes1, themes2 } from './fixture'
 declare module '../src/index' {
   type Themes1 = typeof themes1
   export interface BaseTheme extends Themes1 {}
 }
-
-beforeEach(() => {
-  Appearance.preference = 'no-preference'
-})
 
 describe('Auto Mode', () => {
   const wrapper: typeof ThemeProvider = ({ children }) =>
@@ -64,14 +58,14 @@ describe('Change System Preference', () => {
   test('To "no-preference" to Get Light Mode', () => {
     const { result } = renderHook(() => useTheme(), { wrapper })
     act(() => {
-      Appearance.preference = 'no-preference'
+      Appearance.set(null)
     })
     expect(result.current.colors.primary).toEqual('#a1a1a1')
   })
   test('To Dark Mode', () => {
     const { result } = renderHook(() => useTheme(), { wrapper })
     act(() => {
-      Appearance.preference = 'dark'
+      Appearance.set('dark')
     })
     expect(result.current.colors.primary).toEqual('#a2a2a2')
   })
@@ -85,7 +79,7 @@ describe('Change System Preference', () => {
       { wrapper }
     )
     act(() => {
-      Appearance.preference = 'light'
+      Appearance.set('light')
       result.current.setMode('dark')
     })
     expect(result.current.theme.colors.primary).toEqual('#a2a2a2')

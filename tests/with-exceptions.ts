@@ -1,11 +1,6 @@
 import { createElement } from 'react'
 import { renderHook } from '@testing-library/react-hooks/native'
-import { Appearance } from '../__mocks__/react-native-appearance'
 import { ThemeProvider, useTheme } from '../src/index'
-
-beforeEach(() => {
-  Appearance.preference = 'no-preference'
-})
 
 describe('With Exceptions', () => {
   test('Themes as null', () => {
@@ -55,5 +50,21 @@ describe('With Exceptions', () => {
       createElement(ThemeProvider, null, children)
     const { result } = renderHook(() => useTheme(), { wrapper })
     expect(Object.keys(result.current).length).toEqual(0)
+  })
+  test('Constants as undefined', () => {
+    const wrapper: typeof ThemeProvider = ({ children }) =>
+      createElement(
+        ThemeProvider,
+        {
+          themes: {
+            constants: undefined,
+            dark: { color: '#a1a1a1' },
+            light: { color: '#a2a2a2' }
+          }
+        },
+        children
+      )
+    const { result } = renderHook(() => useTheme(), { wrapper })
+    expect(Object.keys(result.current).length).toEqual(1)
   })
 })

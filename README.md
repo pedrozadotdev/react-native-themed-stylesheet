@@ -11,7 +11,6 @@
 
 A package that allows you to create React Native StyleSheets with support for Dark/Light/Auto Themes.
 
-- Depends on react-native-appearance to choose the theme based on OS preference(Android 10/iOS 13)
 - Simple API
 - Fully typed
 - Builds on top of StyleSheets and Hooks
@@ -19,22 +18,16 @@ A package that allows you to create React Native StyleSheets with support for Da
 
 ## Installation
 
-**Using Expo**
-
-```
-expo install react-native-appearance react-native-themed-stylesheet
-```
-
 **Using Yarn**
 
 ```
-yarn add react-native-appearance react-native-themed-stylesheet
+yarn add react-native-themed-stylesheet
 ```
 
 **Using NPM**
 
 ```
-npm install --save react-native-appearance react-native-themed-stylesheet
+npm install --save react-native-themed-stylesheet
 ```
 
 ## Usage
